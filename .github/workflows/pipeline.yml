@@ -1,9 +1,9 @@
-name: Lint
+name: Lint, Build, and Test
 
 on: [push]
 
 jobs:
-  lint:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,8 +15,22 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install flake8
-        run: pip install flake8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8
 
-      - name: Run flake8
+      - name: Lint code
         run: flake8 .
+
+      - name: Build project
+        run: |
+          echo "Simulating build step"
+          # Example placeholder build step (replace with actual if needed)
+          python setup.py build || echo "No build script found"
+
+      - name: Run tests
+        run: |
+          echo "Running tests"
+          pytest
